@@ -15,7 +15,7 @@ jobs:
       uses: github/stale-repos@v1
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        ORGANIZATION: ${{ secrets.ORGANIZATION }}
+        ORGANIZATION: "ch-robinson-internal-test"
         EXEMPT_TOPICS: "keep,template"
         INACTIVE_DAYS: 365
 
@@ -33,5 +33,5 @@ jobs:
         issue-number: ${{ env.issue_number }}
         title: Stale repository report
         content-filepath: ./stale_repos.md
-        assignees: <YOUR_GITHUB_HANDLE_HERE>
+        assignees: APOB83
         token: ${{ secrets.GITHUB_TOKEN }}
