@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Run stale_repos tool
-      uses: github/stale-repos@v1
+      uses: ch-robinson-internal-test/stale-repos@v1
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         ORGANIZATION: "ch-robinson-internal-test"
