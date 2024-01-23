@@ -20,6 +20,7 @@ jobs:
         run: |
           # Run the stale-repos script and capture the output
           output=$(./stale-repos)
+          echo "$output"
           echo "::set-output name=stale_repos::$output"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
