@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: ch-robinson-internal-test/checkout@v3
+    - uses: ch-robinson-internal-test/checkout@main
 
     - name: Run stale_repos tool
-      uses: ch-robinson-internal-test/stale-repos@v1
+      uses: ch-robinson-internal-test/stale-repos@main
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         ORGANIZATION: "ch-robinson-internal-test"
