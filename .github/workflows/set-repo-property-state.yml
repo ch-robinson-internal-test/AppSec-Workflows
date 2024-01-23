@@ -1,1 +1,24 @@
+name: Set Repositories State Property
 
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run this workflow every day at midnight
+
+jobs:
+  set-repo-state-property:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout stale-repos
+        uses: ch-robinson-internal-test/checkout@main
+        with:
+          repository: ch-robinson-internal-test/stale-repos
+
+      - name: Run stale-repos
+        id: stale-repos
+        run: |
+          # Run the stale-repos script and capture the output
+          output=$(./stale-repos)
+          echo "::set-output name=stale_repos::$output"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
