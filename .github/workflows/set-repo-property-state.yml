@@ -1,8 +1,9 @@
 name: Set Repositories State Property
 
 on:
-  schedule:
-    - cron: '0 0 * * *'  # Run this workflow every day at midnight
+  workflow_dispatch:
+  #schedule:
+  #  - cron: '0 0 * * *'  # Run this workflow every day at midnight
 
 jobs:
   set-repo-state-property:
