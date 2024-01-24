@@ -28,11 +28,13 @@ jobs:
 
     - name: Set Repo Property (State=Stale)
       run: |
-        urls=${{ steps.extract-urls.outputs.urls }}
+        
+        IFS=' ' read -r -a urls <<< "${{ steps.extract-urls.outputs.urls }}"
         for url in $urls; do
           repo=$(echo "$url" | cut -d'/' -f 4-)
           echo $repo         
         done
 
+        #urls=${{ steps.extract-urls.outputs.urls }}
        # response=$(curl -H "Authorization: token ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/$repo")
        # echo "$response"
