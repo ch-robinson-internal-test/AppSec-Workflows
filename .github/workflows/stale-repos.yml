@@ -19,6 +19,8 @@ jobs:
   build:
     name: Find Stale Repos
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.output.outputs.stale_repos }}
 
     steps:
     - name: Checkout
@@ -37,4 +39,5 @@ jobs:
 
     - name: Set output
       id: output
-      run: echo "::set-output name=stale_repos::${{ steps.stale-repos.outputs.inactiveRepos }}"
+      #run: echo "::set-output name=stale_repos::${{ steps.stale-repos.outputs.inactiveRepos }}"
+      run: echo "stale_repos=${{ steps.stale-repos.outputs.inactiveRepos }}" >> $GITHUB_OUTPUT
