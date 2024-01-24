@@ -22,13 +22,22 @@ jobs:
     - name: Echo stale-repos output
       run: echo ${{ needs.call-stale-repos.outputs.stale_repos }}
 
-    - name: Set state to stale
+    - name: Extract URLs
+      id: extract-urls
       run: |
-        repos=($(echo '${{ needs.call-stale-repos.outputs.stale_repos }}' | jq -r 'fromjson | .[].url'))
-        for repo in "${repos[@]}"; do
-          repo_name=${repo#https://github.com/}
-          echo $repo_name
-        done 
+        jsonString = ${{ needs.call-stale-repos.outputs.stale_repos }}
+        urlRegex = '"url": "(.*?)"'
+        matches = $(echo "$jsonString" | grep -E "$urlRegex")
+        urls = $(echo "$matches" | tr -d '"' | tr '\n' ' ')
+        echo "URLs: $urls"
+
+    #- name: Set state to stale
+    #  run: |
+    #    repos=($(echo '${{ needs.call-stale-repos.outputs.stale_repos }}' | jq -r 'fromjson | .[].url'))
+    #    for repo in "${repos[@]}"; do
+    #      repo_name=${repo#https://github.com/}
+    #      echo $repo_name
+    #    done 
 
 
   #set-repo-state-property:

@@ -39,8 +39,4 @@ jobs:
 
     - name: Set output
       id: output
-      run: |
-        jsonString = ${{ steps.stale-repos.outputs.inactiveRepos }}
-        formattedJson = JSON.stringify(jsonString)
-        echo "stale_repos=${formattedJson}" >> $GITHUB_OUTPUT
-      #run: echo "stale_repos=${{ steps.stale-repos.outputs.inactiveRepos }}" >> $GITHUB_OUTPUT
+      run: echo "stale_repos=${{ steps.stale-repos.outputs.inactiveRepos }}" >> $GITHUB_OUTPUT
