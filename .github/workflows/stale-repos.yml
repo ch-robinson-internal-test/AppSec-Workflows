@@ -32,6 +32,9 @@ jobs:
         ORGANIZATION: "ch-robinson-internal-test"
         INACTIVE_DAYS: ${{ inputs.period }}
     
+    - name: Print output of stale_repos tool
+      run: echo "${{ steps.stale-repos.outputs.inactiveRepos }}"
+
     - name: Set output
       id: output
       run: echo "::set-output name=stale_repos::${{ steps.stale-repos.outputs.inactiveRepos }}"
