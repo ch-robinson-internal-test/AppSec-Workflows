@@ -1,4 +1,4 @@
-name: stale repo identifier
+name: Stale Repo Finder
 
 on:
   workflow_call:
@@ -13,16 +13,23 @@ on:
     outputs:
       stale_repos:
         description: "List of stale repositories"
-        value: ${{ jobs.build.outputs.stale_repos }}
+        value: ${{ jobs.find-stale-repos.outputs.stale_repos }}
 
 jobs:
-  build:
+  find-stale-repos:
     name: Find Stale Repos
     runs-on: ubuntu-latest
     outputs:
       stale_repos: ${{ steps.output.outputs.stale_repos }}
 
     steps:
+    - name: Validate inputs
+      run: |
+        if (( ${{ inputs.period }} <= 0 )); then
+          echo "Error: period must be a positive number"
+          exit 1
+        fi
+
     - name: Checkout
       uses: ch-robinson-internal-test/checkout@main
 
@@ -33,6 +40,14 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         ORGANIZATION: "ch-robinson-internal-test"
         INACTIVE_DAYS: ${{ inputs.period }}
+      continue-on-error: true
+    
+    - name: Check stale-repos output
+      run: |
+        if [[ -z "${{ steps.stale-repos.outputs.inactiveRepos }}" ]]; then
+          echo "Error: stale-repos did not produce any output"
+          exit 1
+        fi
     
     - name: Print output of stale_repos tool
       run: echo "${{ steps.stale-repos.outputs.inactiveRepos }}"

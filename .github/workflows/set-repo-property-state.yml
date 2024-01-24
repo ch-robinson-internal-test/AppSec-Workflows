@@ -18,6 +18,7 @@ jobs:
     name: 'Process stale-repos output'
     needs: call-stale-repos
     runs-on: ubuntu-latest
+    
     steps:
     - name: Extract URLs and Set Stale Repos
       id: extract-urls
@@ -34,9 +35,3 @@ jobs:
             https://api.github.com/repos/$repo/properties/values \
             -d '{"properties":[{"property_name":"state","value":"stale"}]}'
         done
-
-      #for url in $urls; do
-      #  repo=$(echo "$url" | cut -d'/' -f 4-)
-      #  response=$(curl -H "Authorization: token ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/$repo")
-      #  echo "$response"
-      #done
