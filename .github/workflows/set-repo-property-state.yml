@@ -22,15 +22,6 @@ jobs:
     - name: Echo stale-repos output
       run: echo ${{ needs.call-stale-repos.outputs.stale_repos }}
 
-    - name: Print repo names
-      run: |
-        repos=${{ fromJSON(needs.call-stale-repos.outputs.stale_repos) }}
-        for repo in "${repos[@]}"; do
-          repo_name=${repo.url#https://github.com/}
-          echo $repo_name
-        done
-      shell: bash
-      
     - name: Set state to stale
       run: |
         repos=($(echo '${{ needs.call-stale-repos.outputs.stale_repos }}' | jq -r 'fromjson | .[].url'))
