@@ -8,8 +8,8 @@ on:
 jobs:
   call-stale-repo-identifier:
       uses: ch-robinson-internal-test/AppSec-Workflows/.github/workflows/stale-repos.yml@main
-      #secrets:
-      #  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      secrets:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
   
   #set-repo-state-property:
   #  runs-on: ubuntu-latest
