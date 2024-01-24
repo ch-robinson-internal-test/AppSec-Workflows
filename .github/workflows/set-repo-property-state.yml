@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Echo stale-repos output
-      run: echo "Stale repos:${{ needs.call-stale-repos.outputs.stale_repos }}"
+      run: echo "Stale repos:${{ needs.call-stale-repos.outputs.inactiveRepos }}"
 
 
   #set-repo-state-property:
