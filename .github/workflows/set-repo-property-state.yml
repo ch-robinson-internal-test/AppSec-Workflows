@@ -25,7 +25,7 @@ jobs:
     - name: Extract URLs
       id: extract-urls
       run: |
-        jsonString = ${{ needs.call-stale-repos.outputs.stale_repos }}
+        jsonString='${{ needs.call-stale-repos.outputs.stale_repos }}'
         urlRegex = '"url": "(.*?)"'
         matches = $(echo "$jsonString" | grep -E "$urlRegex")
         urls = $(echo "$matches" | tr -d '"' | tr '\n' ' ')
