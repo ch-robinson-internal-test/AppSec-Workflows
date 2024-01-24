@@ -10,7 +10,7 @@ jobs:
     name: 'Call stale-repos'
     uses: ch-robinson-internal-test/AppSec-Workflows/.github/workflows/stale-repos.yml@main
     with:
-      period: 365
+      period: 1200
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       
@@ -26,9 +26,14 @@ jobs:
         urls=$(echo "$jsonString" | grep -oP '(?<=url: )[^\,]*')
         for url in $urls; do
           repo=$(echo "$url" | cut -d'/' -f 4-)
-          echo "$repo"
+          curl -L \
+            -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/ch-robinson-internal-test/$repo/properties/values \
+            -d '{"properties":[{"property_name":"state","value":"stale"}]}'
         done
-
 
       #for url in $urls; do
       #  repo=$(echo "$url" | cut -d'/' -f 4-)
