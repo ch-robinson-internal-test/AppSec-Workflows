@@ -24,8 +24,6 @@ jobs:
       run: |
         jsonString='${{ needs.call-stale-repos.outputs.stale_repos }}'
         urls=$(echo "$jsonString" | grep -oP '(?<=url: )[^\,]*')
-        echo "Stale Repos:" 
-        echo $urls
         echo "::set-output name=urls::$urls"
 
     - name: Set Repo Property (State=Stale)
