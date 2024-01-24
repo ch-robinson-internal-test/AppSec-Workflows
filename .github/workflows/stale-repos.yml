@@ -20,7 +20,7 @@ jobs:
     name: Find Stale Repos
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.output.outputs.stale_repos }}
+      stale_repos: ${{ steps.output.outputs.stale_repos }}
 
     steps:
     - name: Checkout
