@@ -30,7 +30,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         ORGANIZATION: "ch-robinson-internal-test"
-        INACTIVE_DAYS: inputs.period
+        INACTIVE_DAYS: ${{ inputs.period }}
     
     - name: Set output
       id: output
