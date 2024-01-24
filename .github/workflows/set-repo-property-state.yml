@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-stale-repo-identifier:
-      uses: .github/workflows/stale-repo-identifier.yaml@main
+      uses: ch-robinson-internal-test/AppSec-Workflows/.github/workflows/stale-repo-identifier.yaml@main
       secrets:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
   
