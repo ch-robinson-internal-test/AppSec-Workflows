@@ -19,40 +19,22 @@ jobs:
     needs: call-stale-repos
     runs-on: ubuntu-latest
     steps:
-    - name: Echo stale-repos output
-      run: echo ${{ needs.call-stale-repos.outputs.stale_repos }}
-
-    - name: Extract URLs
+    - name: Extract URLs of Stale Repos
       id: extract-urls
       run: |
         jsonString='${{ needs.call-stale-repos.outputs.stale_repos }}'
         urls=$(echo "$jsonString" | grep -oP '(?<=url: )[^\,]*')
-        echo "URLs: $urls"
+        echo "Stale Repos:" 
+        echo $urls
+        echo "::set-output name=urls::$urls"
 
-    #- name: Set state to stale
-    #  run: |
-    #    repos=($(echo '${{ needs.call-stale-repos.outputs.stale_repos }}' | jq -r 'fromjson | .[].url'))
-    #    for repo in "${repos[@]}"; do
-    #      repo_name=${repo#https://github.com/}
-    #      echo $repo_name
-    #    done 
+    - name: Set Repo Property (State=Stale)
+      run: |
+        urls=${{ steps.extract-urls.outputs.urls }}
+        for url in $urls; do
+          repo=$(echo "$url" | cut -d'/' -f 4-)
+          echo repo         
+        done
 
-
-  #set-repo-state-property:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  
-  #    - name: Checkout stale-repos
-  #      uses: ch-robinson-internal-test/checkout@main
-  #      with:
-  #        repository: ch-robinson-internal-test/stale-repos
-
-#      - name: Run stale-repos
-#        id: stale-repos
-#        run: |
-#          # Run the stale-repos script and capture the output
-#          output=$(./stale-repos)
-#          echo "$output"
-#          echo "::set-output name=stale_repos::$output"
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+       # response=$(curl -H "Authorization: token ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/$repo")
+       # echo "$response"
