@@ -22,6 +22,14 @@ jobs:
     - name: Echo stale-repos output
       run: echo ${{ needs.call-stale-repos.outputs.stale_repos }}
 
+    - name: Set state to stale
+      run: |
+        repos=($(echo '${{ needs.call-stale-repos.outputs.stale_repos }}' | jq -r '.[].url'))
+        for repo in "${repos[@]}"; do
+          repo_name=${repo#https://github.com/}
+          echo $repo_name
+        done 
+
 
   #set-repo-state-property:
   #  runs-on: ubuntu-latest
