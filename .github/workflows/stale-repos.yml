@@ -27,8 +27,6 @@ jobs:
     - name: Run stale-repos
       id: stale-repos
       uses: ch-robinson-internal-test/stale-repos@main
-      with:
-        period: 365
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         ORGANIZATION: "ch-robinson-internal-test"

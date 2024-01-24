@@ -9,6 +9,8 @@ jobs:
   call-stale-repos:
     name: 'Call stale-repos'
     uses: ch-robinson-internal-test/AppSec-Workflows/.github/workflows/stale-repos.yml@main
+    with:
+      period: 365
     secrets:
       GH_TOKEN: ${{ secrets.GH_TOKEN }}
       
